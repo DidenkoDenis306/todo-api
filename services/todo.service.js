@@ -1,16 +1,12 @@
-import pool from "../db.js";
+import {Todo} from "../models/todo.model.js";
 
 class TodoService {
     async createTodo(todo) {
         const {title, description, due_date, user_id} = todo
 
         try {
-            const result = await pool.query(
-                'INSERT INTO todos (title, description, due_date, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
-                [title, description, due_date, user_id]
-            )
-
-            return result
+            console.log("data", title, description, due_date, user_id)
+            return await Todo.create({title, description, due_date, user_id})
         } catch (error) {
             throw new Error(error.message)
         }
@@ -18,26 +14,34 @@ class TodoService {
 
     async getTodos() {
         try {
-            const result = await pool.query(
-                'SELECT * FROM todos'
-            )
-
-            return result
+           return await Todo.findAll() || []
         } catch (error) {
             throw new Error(error.message)
         }
     }
 
     async getTodoById(id) {
-
+        try {
+            return await Todo.findByPk(id)
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
 
-    async updateTodo(id) {
-
+    async updateTodo(id, todo) {
+        try {
+           return await Todo.update(todo, {where: id})
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
 
     async deleteTodo(id) {
-
+        try {
+            return await Todo.destroy({where: {id}})
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
 }
 

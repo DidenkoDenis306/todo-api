@@ -1,15 +1,16 @@
+CREATE TABLE IF NOT EXISTS users
+(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    );
+
 CREATE TABLE IF NOT EXISTS todos
 (
-    id
-    SERIAL
-    PRIMARY
-    KEY,
-    title
-    VARCHAR
-(
-    255
-) NOT NULL,
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
     description TEXT,
     due_date DATE,
-    user_id INTEGER NOT NULL
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
     );

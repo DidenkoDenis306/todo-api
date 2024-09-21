@@ -6,8 +6,8 @@ class TodoController {
 
         try {
             const result = await todoService.createTodo(todo)
-
-            res.status(201).json(result.rows[0])
+            console.log("controller", result)
+            res.status(201).json(result)
         } catch (error) {
             res.status(500).json({error: error.message})
         }
@@ -17,22 +17,46 @@ class TodoController {
         try {
             const result = await todoService.getTodos()
 
-            res.status(201).json(result.rows)
+            res.status(201).json(result)
         } catch (error) {
             res.status(500).json({error: error.message})
         }
     }
 
     async getOne(req, res) {
+        const { id } = req.params
 
+        try {
+            const result = await todoService.getTodoById(id)
+
+            res.status(201).json(result)
+        } catch  (error) {
+            res.status(500).json({error: error.message})
+        }
     }
 
     async update(req, res) {
+        const { id, todo } = req.params
 
+        try {
+            const result = await todoService.updateTodo(id, todo)
+
+            res.status(201).json(result)
+        } catch  (error) {
+            res.status(500).json({error: error.message})
+        }
     }
 
     async delete(req, res) {
+        const { id } = req.params
 
+        try {
+            const result = await todoService.deleteTodo(id)
+
+            res.status(201).json(id)
+        } catch  (error) {
+            res.status(500).json({error: error.message})
+        }
     }
 }
 

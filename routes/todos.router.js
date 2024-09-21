@@ -7,6 +7,6 @@ todosRouter.get('/', todoController.getAll)
 
 todosRouter.post('/', todoController.create)
 
-todosRouter.delete('/:id')
+todosRouter.delete('/:id', todoController.delete)
 
 export default todosRouter
